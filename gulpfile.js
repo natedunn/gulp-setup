@@ -56,6 +56,36 @@ gulp.task('images', function () {
         .pipe(notify({ message: 'IMAGES task complete' }));
 });
 
+// Legacy Styles
+gulp.task('legacy-styles', function() {
+  return gulp.src('src/sass/legacy.scss')
+    .pipe(sourcemaps.init())
+    .pipe(sass({ style: 'nested' }))
+    .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+    .pipe(gulp.dest('src/css/'))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(minifycss())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('dist/css'))
+    .pipe(notify({ message: 'LEGACY STYLES task complete' }))
+});
+
+// Legacy Scripts
+gulp.task('legacy-scripts', function() {
+  return gulp.src(['src/js/legacy/vendor-legacy/*.js','src/js/legacy/legacy-plugins.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(concat('legacy.js'))    
+    .pipe(gulp.dest('src/js/legacy/'))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(uglify({ outSourceMap: true }))
+    .pipe(gulp.dest('dist/js/'))
+    .pipe(notify({ message: 'LEGACY SCRIPTS task complete' }));
+});
+
+// Legacy
+gulp.task('legacy', ['legacy-styles', 'legacy-scripts']);
+
 // Browser-sync
 gulp.task('sync', function() {
     browserSync({
