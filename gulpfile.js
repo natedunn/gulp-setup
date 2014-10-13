@@ -1,4 +1,4 @@
-// Dependencies 
+// Dependencies
 var gulp = require('gulp'),
     sass = require('gulp-ruby-sass'),
     autoprefixer = require('gulp-autoprefixer'),
@@ -33,7 +33,7 @@ gulp.task('styles', function() {
 
 // Scripts
 gulp.task('scripts', function() {
-  return gulp.src(['src/js/vendor/*.js','src/js/plugins.js'])
+  return gulp.src(['src/js/vendor/jquery/*.js', 'src/js/vendor/*.js','src/js/plugins.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(concat('main.js'))    
